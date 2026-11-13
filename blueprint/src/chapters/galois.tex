@@ -1,0 +1,133 @@
+\chapter{The Galois-theoretic proof}
+\label{chap:galois}
+
+This proof is complete in \texttt{Quintic/Galois.lean}.
+
+\section{Radical values are solvable by radicals}
+
+\begin{lemma}
+  \label{lem:value-solvable-by-rad}
+  \lean{Quintic.value_mem_solvableByRad}
+  \leanok
+  \uses{def:value}
+  If $\mathrm{Value}(e, y)$, then $y$ lies in the subfield of $L$ of elements
+  solvable by radicals over $K$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Induction on $e$. Each constructor of $\mathrm{Value}$ matches a closure property
+  of Mathlib's \texttt{solvableByRad}.
+\end{proof}
+
+\section{The universal splitting field}
+
+Let $x_0, \dots, x_4$ be fresh indeterminates, $S = \mathbb{C}[x_0, \dots, x_4]$ and
+$E = \mathbb{C}(x_0, \dots, x_4)$. Write $e_k$ for the $k$-th elementary symmetric polynomial
+in the $x_j$.
+
+\begin{lemma}[Algebraic independence of the elementary symmetric polynomials]
+  \label{lem:phi-injective}
+  \lean{Quintic.Generic.φ_injective}
+  \leanok
+  \uses{def:K}
+  The $\mathbb{C}$-algebra map $\varphi : R \to S$, $a_i \mapsto e_{5-i}$, is injective.
+  Hence it extends to a field embedding $K \to E$, making $E$ an extension of $K$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  $\varphi$ is a renaming of variables followed by the map $a_i \mapsto e_{i+1}$,
+  which is injective by the fundamental theorem of symmetric polynomials
+  (Mathlib's \texttt{esymmAlgHom\_injective}).
+\end{proof}
+
+\begin{lemma}[The quintic splits over $E$]
+  \label{lem:map-generic-quintic}
+  \lean{Quintic.Generic.map_genericQuintic}
+  \leanok
+  \uses{lem:phi-injective, def:generic-quintic}
+  Over $E$, $P(X) = \prod_{j} \bigl(X - (-x_j)\bigr)$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Vieta's formulas: $\prod_j (X + x_j) = \sum_k e_k X^{5-k}$.
+\end{proof}
+
+\section{\texorpdfstring{$S_5$}{S5} in the Galois group}
+
+\begin{lemma}[Permutations fix $K$]
+  \label{lem:aut-hom}
+  \lean{Quintic.Generic.autHom, Quintic.Generic.autHom_root}
+  \leanok
+  \uses{lem:phi-injective}
+  Each permutation $\sigma$ of the $x_j$ induces an automorphism of $E$ over $K$,
+  sending the root $-x_j$ to $-x_{\sigma(j)}$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Permuting variables fixes each $e_k$, so it fixes the image of $R$; extend to fraction
+  fields with \texttt{IsFractionRing.fieldEquivOfAlgEquivHom}.
+\end{proof}
+
+\begin{lemma}[$S_5$ embeds in the Galois group]
+  \label{lem:gal-hom-injective}
+  \lean{Quintic.Generic.galHom, Quintic.Generic.galHom_injective}
+  \leanok
+  \uses{lem:aut-hom, lem:map-generic-quintic}
+  Restricting the automorphisms of \cref{lem:aut-hom} to a splitting field of $P$ gives an
+  injective group homomorphism $S_5 \to \mathrm{Gal}(P)$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Compare actions on the roots $-x_j$, which are pairwise distinct.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:gal-not-solvable}
+  \lean{Quintic.Generic.not_isSolvable_gal}
+  \leanok
+  \uses{lem:gal-hom-injective}
+  $\mathrm{Gal}(P)$ is not solvable.
+\end{corollary}
+
+\begin{proof}
+  \leanok
+  Subgroups of solvable groups are solvable, and $S_5$ is not solvable
+  (Mathlib's \texttt{Equiv.Perm.not\_isSolvable}).
+\end{proof}
+
+\section{Conclusion}
+
+\begin{lemma}[Roots are not solvable by radicals]
+  \label{lem:root-not-solvable}
+  \lean{Quintic.root_not_mem_solvableByRad}
+  \leanok
+  \uses{lem:aut-hom, lem:map-generic-quintic, cor:gal-not-solvable}
+  No root of $P$ in $L$ is solvable by radicals over $K$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Let $y$ be a root and $q$ its minimal polynomial, so $q \mid P$. Over $E$, $q$ divides a
+  product of linear factors, so it has some root $-x_{j_0}$. Applying the automorphisms of
+  \cref{lem:aut-hom}, every $-x_j$ is a root of $q$, so $\deg q \geq 5$ and $q = P$.
+  By Mathlib's \texttt{isSolvable\_gal\_minpoly}, $\mathrm{Gal}(q)$ would be solvable if $y$
+  were solvable by radicals, contradicting \cref{cor:gal-not-solvable}.
+\end{proof}
+
+\begin{theorem}[Abel--Ruffini, Galois proof]
+  \label{thm:galois-main}
+  \lean{Quintic.quintic_unsolvable_galois}
+  \leanok
+  \uses{def:quintic-unsolvable, lem:value-solvable-by-rad, lem:root-not-solvable}
+  The quintic is unsolvable.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  Combine \cref{lem:value-solvable-by-rad} and \cref{lem:root-not-solvable}.
+\end{proof}

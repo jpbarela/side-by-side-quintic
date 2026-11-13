@@ -19,6 +19,30 @@ A Lean 4 / Mathlib project proving one statement, `Quintic.QuinticUnsolvable`
 Pinned to Mathlib `v4.35.0` with Lean `v4.35.0`. To upgrade, change both
 `lean-toolchain` and `rev` in `lakefile.toml`, then `lake update`.
 
+## Blueprint
+
+`blueprint/` holds a [leanblueprint](https://github.com/PatrickMassot/leanblueprint)
+write-up of both proofs, with a dependency graph that tracks what is formalized.
+Edit the chapters in `blueprint/src/chapters/`. Tag each result with its Lean name
+(`\lean{...}`), add `\leanok` once it is stated or proved, and list dependencies
+with `\uses{...}`.
+
+The `Compile blueprint` workflow builds the project, the blueprint, the API docs and
+the home page in `home_page/`, and checks that every Lean name in the blueprint exists.
+It runs on pushes to `main` and deploys to GitHub Pages. In the repository settings,
+set Pages → Source to "GitHub Actions" once.
+
+To build locally (needs Python, a LaTeX distribution with `latexmk` and `xelatex`,
+and graphviz):
+
+```bash
+pip install leanblueprint
+leanblueprint pdf
+leanblueprint web
+leanblueprint checkdecls
+leanblueprint serve
+```
+
 ## Status
 
 - [x] Shared statement (first draft)
