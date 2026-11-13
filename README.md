@@ -23,6 +23,6 @@ Pinned to Mathlib `v4.35.0` with Lean `v4.35.0`. To upgrade, change both
 
 - [x] Shared statement (first draft)
 - [x] Values of radical expressions lie in `solvableByRad`
-- [ ] Galois group of the generic quintic is `S₅`
+- [x] Galois group of the generic quintic contains `S₅`; the Galois proof is complete
 - [ ] Arnold: monodromy of roots, monodromy of radical expressions
 - [ ] Bridge between algebraic values and analytic continuation
