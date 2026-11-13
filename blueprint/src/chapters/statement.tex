@@ -1,0 +1,60 @@
+\chapter{The shared statement}
+\label{chap:statement}
+
+Both proofs establish one Lean proposition, stated in \texttt{Quintic/Statement.lean}.
+Neither proof file may change it.
+
+\begin{definition}[Coefficient field]
+  \label{def:K}
+  \lean{Quintic.R, Quintic.K, Quintic.L}
+  \leanok
+  Let $R = \mathbb{C}[a_0, \dots, a_4]$ be the polynomial ring in five indeterminates,
+  $K = \mathbb{C}(a_0, \dots, a_4)$ its field of fractions, and $L$ an algebraic closure of $K$.
+\end{definition}
+
+\begin{definition}[The generic quintic]
+  \label{def:generic-quintic}
+  \lean{Quintic.genericQuintic}
+  \leanok
+  \uses{def:K}
+  The generic monic quintic is
+  \[ P(X) = X^5 + a_4 X^4 + a_3 X^3 + a_2 X^2 + a_1 X + a_0 \in K[X]. \]
+\end{definition}
+
+\begin{definition}[Formulas in radicals]
+  \label{def:radexpr}
+  \lean{Quintic.RadExpr}
+  \leanok
+  A formula in radicals is a syntax tree built from the coefficients $a_i$,
+  complex constants, $+$, $-$, $\times$, inverses, and $n$-th roots.
+\end{definition}
+
+\begin{definition}[Values of a formula]
+  \label{def:value}
+  \lean{Quintic.Value}
+  \leanok
+  \uses{def:radexpr, def:K}
+  $\mathrm{Value}(e, y)$ means that $y \in L$ is one of the possible values of $e$,
+  where every $n$-th root ($n \neq 0$) may be any choice of $n$-th root in $L$.
+\end{definition}
+
+\begin{definition}[Unsolvability of the quintic]
+  \label{def:quintic-unsolvable}
+  \lean{Quintic.QuinticUnsolvable}
+  \leanok
+  \uses{def:value, def:generic-quintic}
+  \emph{The quintic is unsolvable} means: for every formula in radicals $e$ and every
+  $y \in L$ with $\mathrm{Value}(e, y)$, we have $P(y) \neq 0$.
+\end{definition}
+
+\begin{theorem}[Both proofs agree]
+  \label{thm:both}
+  \lean{Quintic.quintic_unsolvable_both}
+  \leanok
+  \uses{thm:galois-main, thm:arnold-main}
+  The Galois-theoretic and the topological proof establish the same proposition.
+\end{theorem}
+
+\begin{proof}
+  Pair the two proofs.
+\end{proof}
