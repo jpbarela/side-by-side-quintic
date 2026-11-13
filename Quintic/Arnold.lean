@@ -1,4 +1,6 @@
-import Quintic.Statement
+module
+
+public import Quintic.Statement
 
 /-!
 # Arnold's topological proof
@@ -19,6 +21,8 @@ Plan:
    the coefficients, so that steps 1–3 apply. Alternatively, restate
    `QuinticUnsolvable` analytically and move the bridge to `Galois.lean`.
 -/
+
+public section
 
 namespace Quintic
 

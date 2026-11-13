@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 
 /-!
 # The shared statement
@@ -20,6 +22,8 @@ Design note: the values live in an algebraic closure of the function field
 works with multivalued analytic functions of complex coefficients, so it must
 supply a bridge from these values to analytic continuation. See `Arnold.lean`.
 -/
+
+@[expose] public section
 
 open Polynomial
 

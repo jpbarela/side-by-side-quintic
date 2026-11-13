@@ -1,4 +1,6 @@
-import Quintic.Statement
+module
+
+public import Quintic.Statement
 
 /-!
 # The Galois-theoretic proof
@@ -13,6 +15,8 @@ Plan:
    minimal polynomials with solvable Galois group. A root `y` of the generic
    quintic has minimal polynomial `genericQuintic`, so `y ∉ solvableByRad K L`.
 -/
+
+public section
 
 open Polynomial
 
